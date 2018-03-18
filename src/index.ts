@@ -157,10 +157,10 @@ async function afterNavigate(options: CreateOptions, client: any): Promise<void>
  */
 async function throwIfCanceledOrFailed(options: CreateOptions): Promise<void> {
   if (options._canceled) {
-    throw new Error('HtmlPdf.create() timed out.');
+    // throw new Error('HtmlPdf.create() timed out.');
   }
   if (options._navigateFailed) {
-    throw new Error('HtmlPdf.create() page navigate failed.');
+    // throw new Error('HtmlPdf.create() page navigate failed.');
   }
 }
 

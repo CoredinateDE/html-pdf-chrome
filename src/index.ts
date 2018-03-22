@@ -10,7 +10,11 @@ import * as CompletionTrigger from './CompletionTriggers';
 import {CreateOptions} from './CreateOptions';
 import {CreateResult} from './CreateResult';
 
-Bluebird.config({cancellation: true});
+try {
+    Bluebird.config({cancellation: true});
+} catch (err) {
+    // was already configured
+}
 
 (tslib as any).__awaiter = awaiter;
 type BluePromise<T> = Bluebird.Promise<T>;

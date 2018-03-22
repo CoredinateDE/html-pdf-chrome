@@ -93,13 +93,15 @@ export interface CreateOptions {
      * @memberof CreateOptions
      */
     runtimeExceptionHandler?: (exception: ExceptionThrown) => void;
+    eventHandler?: (value: any) => void;
+    errorHandler?: (value: any) => void;
     /**
      * A private flag to signify the operation has been canceled.
      *
      * @type {boolean}
      * @memberof CreateOptions
      */
-    _canceled?: boolean;
+    _canceled?: string;
     /**
      * A private variable to store the main page navigation requestId.
      *

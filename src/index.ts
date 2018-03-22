@@ -27,6 +27,7 @@ const DEFAULT_CHROME_FLAGS = [
 
 enum ERROR_EVENT {
     DISCONNECT = 'disconnect',
+    TARGET_CRASHED = 'Inspector.targetCrashed',
 }
 
 export {CompletionTrigger, CreateOptions, CreateResult};
@@ -82,9 +83,15 @@ async function generate(html: string, options: CreateOptions, tab: any): BluePro
         client.on('error', options.errorHandler);
     }
 
-    if (options.eventHandler != null) {
-        client.on('event', options.eventHandler);
-    }
+    client.on('event', (oEvent) => {
+        if (options.eventHandler != null) {
+            options.eventHandler(oEvent);
+        }
+        if (oEvent.method === ERROR_EVENT.TARGET_CRASHED) {
+            options._canceled = ERROR_EVENT.TARGET_CRASHED;
+            promise.cancel();
+        }
+    });
 
     client.once(ERROR_EVENT.DISCONNECT, () => {
         options._canceled = ERROR_EVENT.DISCONNECT;
